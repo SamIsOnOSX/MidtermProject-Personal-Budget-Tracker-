@@ -14,6 +14,11 @@ config/name="C:\\Users\\Admin\\Desktop\\Personal Budget Tracker(UI)"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=350
+window/size/viewport_height=500
+
 [dotnet]
 
 project/assembly_name="C--Users-Admin-Desktop-Personal Budget Tracker(UI)"
