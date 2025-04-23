@@ -1,0 +1,93 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0sddfqqbi6ya"]
+
+[ext_resource type="Script" uid="uid://cujepon783th2" path="res://MainUi.cs" id="1_vfs0v"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 1.0
+offset_right = 3.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vfs0v")
+metadata/_edit_lock_ = true
+
+[node name="DescriptionInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.005
+anchor_top = 0.142
+anchor_right = 0.23
+anchor_bottom = 0.263
+offset_left = 0.26
+offset_top = 0.261993
+offset_right = -0.0400085
+offset_bottom = -0.0570068
+
+[node name="AmountInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.005
+anchor_top = 0.274
+anchor_right = 0.231
+anchor_bottom = 0.322
+offset_left = 0.26
+offset_top = -0.0860138
+offset_right = -0.188019
+offset_bottom = 0.241989
+
+[node name="Type_ Income_Expense" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.139
+anchor_top = 0.014
+anchor_right = 0.229
+anchor_bottom = 0.045
+offset_left = -0.572021
+offset_top = 0.0539999
+offset_right = -0.892029
+offset_bottom = 0.244999
+
+[node name="CategoryInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.006
+anchor_top = 0.055
+anchor_right = 0.229
+anchor_bottom = 0.135
+offset_left = 0.112
+offset_top = -0.145
+offset_right = 0.107971
+offset_bottom = -0.265007
+
+[node name="AddTransactionButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.008
+anchor_top = 0.335
+anchor_right = 0.145
+anchor_bottom = 0.359
+offset_left = -0.184
+offset_top = -0.0650024
+offset_right = 0.539993
+offset_bottom = 15.599
+text = "ADD TRANSACTION"
+
+[node name="SummaryLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.26
+anchor_top = 0.014
+anchor_right = 0.539
+anchor_bottom = 0.638
+offset_left = 0.519989
+offset_top = 3.054
+offset_right = 0.227966
+offset_bottom = 3.31799
+text = "Summary Label:
+
+"
