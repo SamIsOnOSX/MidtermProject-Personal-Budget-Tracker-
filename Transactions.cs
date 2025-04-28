@@ -20,7 +20,6 @@ public class Transaction
         Type = type;
         Category = category;
         Date = date;
-        //skibidi
-        
     }
 }
+

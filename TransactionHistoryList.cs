@@ -9,17 +9,12 @@ public partial class TransactionHistoryList : Node
 
     public override void _Ready()
     {
-        // **Get the application's directory and construct the file path**
+        // Get the application's directory and construct the file path
         string appDirectory = System.IO.Path.GetDirectoryName(OS.GetExecutablePath());
         filePath = System.IO.Path.Combine(appDirectory, "transactions.txt");
 
-        GD.Print($"Saving transactions to: {filePath}"); // Debugging file path
-
         // Reference the VBoxContainer inside ScrollContainer
         transactionContainer = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer");
-
-        if (transactionContainer == null)
-            GD.PrintErr("VBoxContainer not found! Ensure the scene structure is correct.");
 
         // Load existing transactions from file when the game starts
         LoadTransactionsFromFile();
@@ -45,42 +40,28 @@ public partial class TransactionHistoryList : Node
 
     private void SaveTransactionToFile(string type, string category, string description, string dateAdded, decimal amount)
     {
-        try
+        using (StreamWriter writer = new StreamWriter(filePath, true, System.Text.Encoding.UTF8)) // Append mode + UTF-8 encoding
         {
-            using (StreamWriter writer = new StreamWriter(filePath, true, System.Text.Encoding.UTF8)) // Append mode + UTF-8 encoding
-            {
-                writer.WriteLine($"{dateAdded}, {type}, {category}, {description}, PHP {amount:N2}");
-            }
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr($"Error saving transaction: {e.Message}");
+            writer.WriteLine($"{dateAdded}, {type}, {category}, {description}, PHP {amount:N2}");
         }
     }
 
     private void LoadTransactionsFromFile()
     {
-        try
+        if (!File.Exists(filePath)) return; // No file yet, skip loading
+
+        using (StreamReader reader = new StreamReader(filePath, System.Text.Encoding.UTF8))
         {
-            if (!File.Exists(filePath)) return; // No file yet, skip loading
-
-            using (StreamReader reader = new StreamReader(filePath, System.Text.Encoding.UTF8))
+            while (!reader.EndOfStream)
             {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-                    string[] parts = line.Split(',');
+                string line = reader.ReadLine();
+                string[] parts = line.Split(',');
 
-                    if (parts.Length == 5)
-                    {
-                        AddTransaction(parts[1].Trim(), parts[2].Trim(), parts[3].Trim(), parts[0].Trim(), decimal.Parse(parts[4].Replace("PHP", "").Trim()));
-                    }
+                if (parts.Length == 5)
+                {
+                    AddTransaction(parts[1].Trim(), parts[2].Trim(), parts[3].Trim(), parts[0].Trim(), decimal.Parse(parts[4].Replace("PHP", "").Trim()));
                 }
             }
-        }
-        catch (Exception e)
-        {
-            GD.PrintErr($"Error loading transactions: {e.Message}");
         }
     }
 }
