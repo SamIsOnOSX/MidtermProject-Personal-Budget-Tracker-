@@ -9,8 +9,11 @@ public partial class TransactionHistoryList : Node
 
     public override void _Ready()
     {
-        // Convert `user://transactions.txt` to an absolute path
-        filePath = ProjectSettings.GlobalizePath("user://transactions.txt");
+        // **Get the application's directory and construct the file path**
+        string appDirectory = System.IO.Path.GetDirectoryName(OS.GetExecutablePath());
+        filePath = System.IO.Path.Combine(appDirectory, "transactions.txt");
+
+        GD.Print($"Saving transactions to: {filePath}"); // Debugging file path
 
         // Reference the VBoxContainer inside ScrollContainer
         transactionContainer = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer");
@@ -18,8 +21,8 @@ public partial class TransactionHistoryList : Node
         if (transactionContainer == null)
             GD.PrintErr("VBoxContainer not found! Ensure the scene structure is correct.");
 
-        GD.Print($"Saving transactions to: {filePath}"); // Debugging file path
-
+        // Load existing transactions from file when the game starts
+        LoadTransactionsFromFile();
     }
 
     public void AddTransaction(string type, string category, string description, string dateAdded, decimal amount)
@@ -52,6 +55,32 @@ public partial class TransactionHistoryList : Node
         catch (Exception e)
         {
             GD.PrintErr($"Error saving transaction: {e.Message}");
+        }
+    }
+
+    private void LoadTransactionsFromFile()
+    {
+        try
+        {
+            if (!File.Exists(filePath)) return; // No file yet, skip loading
+
+            using (StreamReader reader = new StreamReader(filePath, System.Text.Encoding.UTF8))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    string[] parts = line.Split(',');
+
+                    if (parts.Length == 5)
+                    {
+                        AddTransaction(parts[1].Trim(), parts[2].Trim(), parts[3].Trim(), parts[0].Trim(), decimal.Parse(parts[4].Replace("PHP", "").Trim()));
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"Error loading transactions: {e.Message}");
         }
     }
 }

@@ -13,7 +13,8 @@ config_version=5
 config/name="C:\\Users\\Admin\\Desktop\\Personal Budget Tracker(UI)"
 run/main_scene="uid://b0sddfqqbi6ya"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="uid://dolhdb0bbuhkn"
 
 [display]
 
